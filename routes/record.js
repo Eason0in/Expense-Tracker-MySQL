@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')
+const { setDateFormat } = require('../config/setDateFormat')
 
 router.get('/new', (req, res) => {
   res.render('new')
 })
 
-router.post('/new', (req, res) => {
+router.post('/new', setDateFormat, (req, res) => {
   const newRecord = new Record(req.body)
   newRecord.save().then(() => {
     res.redirect('/')
@@ -14,11 +15,15 @@ router.post('/new', (req, res) => {
 })
 
 router.get('/edit/:id', (req, res) => {
-  res.render('edit')
+  Record.findOne({ _id: req.params.id }, (err, record) => {
+    if (err) console.err(err)
+    record.date = record.date.replace(/\//g, '-')
+    res.render('edit', { record })
+  })
 })
 
-router.put('/edit/:id', (req, res) => {
-  res.send('edit')
+router.put('/edit/:id', setDateFormat, (req, res) => {
+  Record.findOneAndUpdate({ _id: req.params.id }, req.body, err => (err ? console.err(err) : res.redirect('/')))
 })
 
 router.delete('/delete/:id', (req, res) => {
