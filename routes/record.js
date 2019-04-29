@@ -29,7 +29,7 @@ router.put('/edit/:id', setDateFormat, (req, res) => {
 })
 
 router.delete('/delete/:id', (req, res) => {
-  res.send('delete')
+  Record.deleteOne({ _id: req.params.id }, err => (err ? console.error(err) : res.redirect('/')))
 })
 
 Handlebars.registerHelper('select', function(selected, options) {
