@@ -19,6 +19,7 @@ const db = mongoose.connection
 app.use('/', require('./routes/home'))
 app.use('/records', require('./routes/record'))
 app.use('/filter', require('./routes/filter'))
+app.use('/users', require('./routes/user'))
 
 app.listen(port, () => {
   console.log(`App is running in http://localhost:${port}`)
