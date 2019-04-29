@@ -2,9 +2,11 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')
 const { setDateFormat } = require('../config/setDateFormat')
+const categoryInfo = require('../public/javascripts/categoryInfo')
+const Handlebars = require('handlebars')
 
 router.get('/new', (req, res) => {
-  res.render('new')
+  res.render('new', { categoryInfo })
 })
 
 router.post('/new', setDateFormat, (req, res) => {
@@ -18,7 +20,7 @@ router.get('/edit/:id', (req, res) => {
   Record.findOne({ _id: req.params.id }, (err, record) => {
     if (err) console.err(err)
     record.date = record.date.replace(/\//g, '-')
-    res.render('edit', { record })
+    res.render('edit', { record, categoryInfo })
   })
 })
 
@@ -28,6 +30,10 @@ router.put('/edit/:id', setDateFormat, (req, res) => {
 
 router.delete('/delete/:id', (req, res) => {
   res.send('delete')
+})
+
+Handlebars.registerHelper('select', function(selected, options) {
+  return options.fn(this).replace(new RegExp(' value="' + selected + '"'), '$& selected="selected"')
 })
 
 module.exports = router

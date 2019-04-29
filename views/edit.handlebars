@@ -38,8 +38,11 @@
 
       <div class="col-4">
         <select id="category" class="form-control" name="category" value="{{record.category}}" required>
-          <option selected>交通</option>
-          <option>...</option>
+          {{#select record.category}}
+          {{#each categoryInfo}}
+          <option value="{{this}}">{{this}}</option>
+          {{/each}}
+          {{/select}}
         </select>
       </div>
     </div>

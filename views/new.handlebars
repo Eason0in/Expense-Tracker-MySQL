@@ -37,8 +37,10 @@
 
       <div class="col-4">
         <select id="category" class="form-control" name="category" required>
-          <option selected>交通出行</option>
-          <option>...</option>
+          {{#each categoryInfo}}
+          <option value="{{this}}">{{this}}</option>
+          {{/each}}
+
         </select>
       </div>
     </div>

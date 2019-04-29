@@ -7,8 +7,9 @@ const categoryInfo = require('../public/javascripts/categoryInfo')
 router.get('/', (req, res) => {
   Record.find().exec((err, records) => {
     if (err) console.err(err)
+    let filterCondition = {}
     const total = records.reduce((sum, { amount }) => sum + amount, 0)
-    res.render('index', { records, total, categoryInfo })
+    res.render('index', { records, total, categoryInfo, filterCondition })
   })
 })
 
