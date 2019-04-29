@@ -3,8 +3,9 @@ const router = express.Router()
 const Record = require('../models/record')
 const Handlebars = require('handlebars')
 const categoryInfo = require('../public/javascripts/categoryInfo')
+const { authenticated } = require('../config/auth')
 
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   Record.find().exec((err, records) => {
     if (err) console.err(err)
     let filterCondition = {}

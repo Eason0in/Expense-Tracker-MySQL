@@ -1,10 +1,18 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('passport')
 const Record = require('../models/record')
 const User = require('../models/user')
 
 router.get('/login', (req, res) => {
   res.render('login')
+})
+
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/users/login'
+  })(req, res, next)
 })
 
 router.get('/register', (req, res) => {
@@ -32,4 +40,12 @@ router.post('/register', (req, res) => {
     })
   }
 })
+
+//登出
+router.get('/logout', (req, res) => {
+  req.logOut()
+  req.flash('success_msg', '登出成功')
+  res.redirect('/users/login')
+})
+
 module.exports = router
