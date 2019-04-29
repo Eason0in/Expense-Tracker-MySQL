@@ -2,14 +2,7 @@
   <div class="row justify-content-center" id="search-bar">
 
     <div class="col-3">
-      <select class="form-control">
-        <option selected>月份</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
+      {{> months}}
     </div>
 
     <div class="col-3">
@@ -63,9 +56,9 @@
       </div>
 
       <div class="media-btn col-3 align-self-center d-flex">
-        <a href="/records/edit/{{this._id}}" class="p-2">修改</a>
+        <a href="/records/edit/{{this._id}}" class="p-2 btn btn-default align-self-center">修改</a>
         <form action="/records/delete/{{this._id}}?_method=DELETE" method="POST" class="p-2">
-          <button type="submit">刪除</button>
+          <button type="submit" class="btn btn-default">刪除</button>
         </form>
       </div>
 
