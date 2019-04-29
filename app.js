@@ -1,6 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const port = 3000
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
@@ -36,6 +39,7 @@ const db = mongoose.connection
 app.use('/', require('./routes/home'))
 app.use('/records', authenticated, require('./routes/record'))
 app.use('/filter', authenticated, require('./routes/filter'))
+app.use('/auth', require('./routes/auth'))
 app.use('/users', require('./routes/user'))
 
 app.listen(port, () => {
