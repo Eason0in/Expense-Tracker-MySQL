@@ -1,0 +1,87 @@
+<div class="container mt-4">
+  <div class="row justify-content-center" id="search-bar">
+
+    <div class="col-3">
+      <select class="form-control">
+        <option selected>月份</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+
+    <div class="col-3">
+      <select class="form-control">
+        <option selected>類別</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="row justify-content-center d-flex" id="search-bar">
+    <div class="col-2">
+      <label>總金額:</label>
+    </div>
+    <div class="col-4">
+      <p class="font-total mb-0">{{total}}</p>
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+<div class="container mt-2">
+  <ul class="list-unstyled">
+    {{#each records}}
+    <li class="media mb-2 row justify-content-center">
+      <div class="py-1 col-9">
+        <div class="row">
+          <div class="col-4"></div>
+
+          <div class="media-body col-8 d-flex bg-light justify-content-between align-center py-2">
+            <div class="d-flex align-items-center">
+              <i class="far fa-edit h3"></i>
+              <div class="ml-1">
+                <h5 class="mt-0 mb-1 font-weight-bold">{{this.name}}</h5>
+                {{this.date}}
+              </div>
+
+            </div>
+
+            <div class="align-self-center">
+              <h5>{{this.amount}}</h5>
+            </div>
+
+          </div>
+
+
+
+        </div>
+      </div>
+
+      <div class="media-btn col-3 align-self-center d-flex">
+        <a href="/records/edit/{{this._id}}" class="p-2">修改</a>
+        <form action="/records/delete/{{this._id}}?_method=DELETE" method="POST" class="p-2">
+          <button type="submit">刪除</button>
+        </form>
+      </div>
+
+    </li>
+    {{/each}}
+
+    <div class="d-block text-center">
+      <a href="/records/new" class="btn btn-outline-dark">新增支出</a>
+    </div>
+  </ul>
+
+
+</div>
