@@ -32,7 +32,7 @@ router.get('/:category', (req, res) => {
     filterCondition.month = category
   }
 
-  Record.find().exec((err, recordList) => {
+  Record.find({ userId: req.user._id }).exec((err, recordList) => {
     if (err) console.err(err)
     const { records, total } = filterData(recordList)
     res.render('index', { records, total, categoryInfo, filterCondition })

@@ -11,13 +11,14 @@ router.get('/new', (req, res) => {
 
 router.post('/new', setDateFormat, (req, res) => {
   const newRecord = new Record(req.body)
+  newRecord.userId = req.user._id
   newRecord.save().then(() => {
     res.redirect('/')
   })
 })
 
 router.get('/edit/:id', (req, res) => {
-  Record.findOne({ _id: req.params.id }, (err, record) => {
+  Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) console.err(err)
     record.date = record.date.replace(/\//g, '-')
     res.render('edit', { record, categoryInfo })
@@ -25,11 +26,13 @@ router.get('/edit/:id', (req, res) => {
 })
 
 router.put('/edit/:id', setDateFormat, (req, res) => {
-  Record.findOneAndUpdate({ _id: req.params.id }, req.body, err => (err ? console.err(err) : res.redirect('/')))
+  Record.findOneAndUpdate({ _id: req.params.id, userId: req.user._id }, req.body, err =>
+    err ? console.err(err) : res.redirect('/')
+  )
 })
 
 router.delete('/delete/:id', (req, res) => {
-  Record.deleteOne({ _id: req.params.id }, err => (err ? console.error(err) : res.redirect('/')))
+  Record.deleteOne({ _id: req.params.id, userId: req.user._id }, err => (err ? console.error(err) : res.redirect('/')))
 })
 
 Handlebars.registerHelper('select', function(selected, options) {
