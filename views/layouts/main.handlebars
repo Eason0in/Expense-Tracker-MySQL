@@ -10,6 +10,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 
@@ -18,9 +19,9 @@
         <nav class="navbar navbar-light   bg-light ">
             <a class="navbar-brand" href="/">家庭記事本</a>
             {{#if isAuthenticated}}
-            <a href="/users/logout" class="btn btn-outline-dark">登出</a>
+            <a href="/users/logout" class="btn btn-outline-dark record-font-color">登出</a>
             {{else}}
-            <a href="/users/login" class="btn btn-outline-dark">登入</a>
+            <a href="/users/login" class="btn btn-outline-dark record-font-color">登入</a>
             {{/if}}
         </nav>
     </header>

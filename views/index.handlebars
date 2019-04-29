@@ -11,12 +11,12 @@
 
   </div>
 
-  <div class="row justify-content-center d-flex" id="search-bar">
+  <div class="row justify-content-center d-flex mt-5" id="search-bar">
     <div class="col-2">
       <label>總金額:</label>
     </div>
     <div class="col-4">
-      <p class="font-total mb-0">{{total}}</p>
+      <p class="font-total mb-0 record-font-color ">{{total}}</p>
     </div>
 
 
@@ -25,16 +25,16 @@
 
 
 <div class="container mt-2">
-  <ul class="list-unstyled">
+  <ul id="records-list" class="list-unstyled">
     {{#each records}}
     <li class="media mb-2 row justify-content-center">
       <div class="py-1 col-9">
         <div class="row">
           <div class="col-4"></div>
 
-          <div class="media-body col-8 d-flex bg-light justify-content-between align-center py-2">
+          <div class="media-body col-8 d-flex justify-content-between align-center py-2">
             <div class="d-flex align-items-center">
-              <i class="far fa-edit h3"></i>
+              <i class="fas {{letterText this.category}} h3 pr-2"></i>
               <div class="ml-1">
                 <h5 class="mt-0 mb-1 font-weight-bold">{{this.name}}</h5>
                 {{this.date}}
@@ -49,7 +49,7 @@
         </div>
       </div>
 
-      <div class="media-btn col-3 align-self-center d-flex">
+      <div class="media-btn col-3 align-self-center justify-content-center d-flex">
         <a href="/records/edit/{{this._id}}" class="p-2 btn btn-default align-self-center">修改</a>
         <form action="/records/delete/{{this._id}}?_method=DELETE" method="POST" class="p-2">
           <button type="submit" class="btn btn-default">刪除</button>
@@ -59,10 +59,18 @@
     </li>
     {{/each}}
 
-    <div class="d-block text-center">
-      <a href="/records/new" class="btn btn-outline-dark">新增支出</a>
-    </div>
+
   </ul>
 
+  <div class="row text-center">
+    <div class="col-4"></div>
+
+    <div class="col-3">
+      <a href="/records/new" class="btn btn-outline-dark btn-block">新增支出</a>
+    </div>
+
+    <div class="col-4"></div>
+
+  </div>
 
 </div>
