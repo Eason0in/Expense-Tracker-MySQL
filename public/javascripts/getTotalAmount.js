@@ -1,5 +1,5 @@
 const getTotalAmount = records => {
-  const total = records.reduce((sum, { amount }) => sum + amount, 0).toLocaleString()
+  const total = records.reduce((sum, { amount }) => sum + amount, 0)
   return total
 }
 

@@ -7,5 +7,6 @@ router.use('/records', authenticated, require('./record'))
 router.use('/filter', authenticated, require('./filter'))
 router.use('/auth', require('./auth'))
 router.use('/users', require('./user'))
+router.use('/statistic', require('./statistic'))
 
 module.exports = router

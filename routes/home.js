@@ -11,7 +11,7 @@ router.get('/', authenticated, (req, res) => {
     .sort('-date')
     .exec((err, records) => {
       if (err) console.err(err)
-      const total = getTotalAmount(records)
+      const total = getTotalAmount(records).toLocaleString()
       res.render('index', { records, total, categoryInfo })
     })
 })

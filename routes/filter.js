@@ -21,7 +21,7 @@ const filterData = (recordList, filterCondition) => {
     })
   }
 
-  const total = getTotalAmount(records)
+  const total = getTotalAmount(records).toLocaleString()
   return { records, total }
 }
 

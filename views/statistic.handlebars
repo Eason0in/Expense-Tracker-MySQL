@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row justify-content-center mb-5 mt-2" id="search-bar">
+
+    <div class="col-3">
+      <button type="button" class="btn btn-outline-secondary btn-block dropdown-toggle" data-toggle="dropdown">
+        {{#if month}}
+        {{month}} 月
+        {{else}}
+        月份
+        {{/if}}
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/statistic/01">01</a>
+        <a class="dropdown-item" href="/statistic/02">02</a>
+        <a class="dropdown-item" href="/statistic/03">03</a>
+        <a class="dropdown-item" href="/statistic/04">04</a>
+        <a class="dropdown-item" href="/statistic/05">05</a>
+        <a class="dropdown-item" href="/statistic/06">06</a>
+        <a class="dropdown-item" href="/statistic/07">07</a>
+        <a class="dropdown-item" href="/statistic/08">08</a>
+        <a class="dropdown-item" href="/statistic/09">09</a>
+        <a class="dropdown-item" href="/statistic/10">10</a>
+        <a class="dropdown-item" href="/statistic/11">11</a>
+        <a class="dropdown-item" href="/statistic/12">12</a>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="row justify-content-center">
+    {{#if records}}
+    {{#each records}}
+    <div class="col-md-3">
+      <div class="progress" data-percentage="{{this.drawPercentage}}">
+        <span class="progress-left">
+          <span class="progress-bar"></span>
+        </span>
+        <span class="progress-right">
+          <span class="progress-bar"></span>
+        </span>
+        <div class="progress-value">
+          <div>
+            {{this.percentage}}%<br>
+            <span>{{this.category}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+
+    {{else}}
+
+    <div class="h1">該月份無紀錄!</div>
+    {{/if}}
+
+  </div>
+
+</div>
