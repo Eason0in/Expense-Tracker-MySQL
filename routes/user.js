@@ -22,7 +22,7 @@ router.post('/login', (req, res, next) => {
       if (err) {
         return next(err)
       }
-      return res.redirect('/users/login')
+      return res.redirect('/')
     })
   })(req, res, next)
 })
