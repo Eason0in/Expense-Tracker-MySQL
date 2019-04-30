@@ -65,7 +65,4 @@ db.once('open', () => {
       )
     })
   })
-
-  // let initPassword = 'asd'
-  // getBcryptPassword(initPassword, insertDatas)
 })

@@ -31,12 +31,15 @@ app.use((req, res, next) => {
   next()
 })
 
-// mongoose 連線後透過 mongoose.connection 拿到 Connection 的物件
-mongoose.connect('mongodb://127.0.0.1/expensetracker', { useNewUrlParser: true, useFindAndModify: false })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/todo', {
+  useNewUrlParser: true,
+  useCreateIndex: true
+})
+
 const db = mongoose.connection
 
 app.use(require('./routes'))
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`App is running in http://localhost:${port}`)
 })
