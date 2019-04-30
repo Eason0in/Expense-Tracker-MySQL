@@ -31,7 +31,7 @@ app.use((req, res, next) => {
   next()
 })
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/todo', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/expensetracker', {
   useNewUrlParser: true,
   useCreateIndex: true
 })
