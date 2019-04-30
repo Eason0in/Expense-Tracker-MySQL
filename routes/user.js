@@ -10,9 +10,20 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/users/login'
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return next(err)
+    }
+    if (!user) {
+      req.flash('warning_msg', info.message)
+      return res.redirect('/users/login')
+    }
+    req.logIn(user, err => {
+      if (err) {
+        return next(err)
+      }
+      return res.redirect('/users/login')
+    })
   })(req, res, next)
 })
 

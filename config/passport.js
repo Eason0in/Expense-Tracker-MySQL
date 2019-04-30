@@ -12,7 +12,7 @@ module.exports = passport => {
       (email, password, done) => {
         User.findOne({ email: email }).then(user => {
           if (!user) {
-            return done(null, false, { message: 'That email is not registered' })
+            return done(null, false, { message: '這個email沒有註冊' })
           }
 
           bcrypt.compare(password, user.password, (err, isMac) => {
@@ -20,7 +20,7 @@ module.exports = passport => {
             if (isMac) {
               return done(null, user)
             } else {
-              done(null, false, { message: 'Email or Password incorrect' })
+              done(null, false, { message: 'email或密碼不正確' })
             }
           })
         })
