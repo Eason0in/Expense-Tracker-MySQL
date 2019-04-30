@@ -22,7 +22,8 @@ button.dropdown-toggle::after {
   margin-left: 6.255em;
 }
 
-#records-list > li:nth-child(odd) .media-body {
+#records-list > li:nth-child(odd) .media-body,
+nav {
   background-color: rgb(244, 243, 244);
 }
 
