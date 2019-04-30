@@ -1,12 +1,19 @@
 <div class="container mt-4">
-  <a href="/statistic" class="p-2 btn btn-default align-self-center">統計圖</a>
+
 
   <div class="row justify-content-center" id="search-bar">
+
+    <div class="col-2">
+      <a href="/records/new" class="btn btn-danger btn-block">新增支出</a>
+    </div>
     <div class="col-3">
       {{> months}}
     </div>
     <div class="col-3">
       {{> category}}
+    </div>
+    <div class="col-2">
+      <a href="/statistic" class="btn btn-info btn-block">統計圖</a>
     </div>
   </div>
   <div class="row justify-content-center d-flex mt-5" id="search-bar">
@@ -14,7 +21,7 @@
       <label>總金額:</label>
     </div>
     <div class="col-4">
-      <p class="font-total mb-0 record-font-color ">{{total}}</p>
+      <p class="font-total mb-0 text-danger">{{total}}</p>
     </div>
 
 
@@ -60,15 +67,6 @@
 
   </ul>
 
-  <div class="row text-center">
-    <div class="col-4"></div>
 
-    <div class="col-3">
-      <a href="/records/new" class="btn btn-outline-dark btn-block">新增支出</a>
-    </div>
-
-    <div class="col-4"></div>
-
-  </div>
 
 </div>

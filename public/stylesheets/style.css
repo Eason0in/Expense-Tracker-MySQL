@@ -9,15 +9,6 @@ body {
   font-size: 5em;
 }
 
-.record-font-color {
-  color: rgb(255, 91, 45);
-}
-
-a[href='/records/new'] {
-  background-color: rgb(255, 91, 45);
-  color: white;
-}
-
 button.dropdown-toggle::after {
   margin-left: 6.255em;
 }
@@ -186,7 +177,7 @@ i.fas {
   animation: loading-5 0.6s linear forwards;
 }
 .progress[data-percentage='95'] .progress-left .progress-bar {
-  animation: loading-0 0.6s linear forwards 0.6s;
+  animation: loading-45 0.6s linear forwards 0.6s;
 }
 
 .progress[data-percentage='100'] .progress-right .progress-bar {
@@ -247,6 +238,18 @@ i.fas {
     transform: rotate(144deg);
   }
 }
+
+@keyframes loading-45 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(162);
+    transform: rotate(162deg);
+  }
+}
+
 @keyframes loading-5 {
   0% {
     -webkit-transform: rotate(0deg);

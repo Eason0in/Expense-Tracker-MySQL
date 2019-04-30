@@ -7,19 +7,19 @@ const { authenticated } = require('../config/auth')
 function getDrawPercentage(percentage) {
   let one = percentage % 10
   let ten = Math.floor(percentage / 10)
-  if (ten > 9 && one > 5) {
+  if (ten === 10) {
     return 100
   }
   if (ten === 9 && one >= 5) {
     return 95
   }
-  if (ten !== 0 && one > 5) {
+  if (ten !== 0 && one >= 5) {
     return ++ten * 10
   }
   if (ten !== 0 && one < 5) {
     return ten * 10
   }
-  if (ten === 0 && one > 5) {
+  if (ten === 0 && one >= 5) {
     return ++ten * 10
   }
   if (ten === 0 && one < 5) {
@@ -53,14 +53,16 @@ router.get('/:month', authenticated, (req, res) => {
     }, {})
 
     let currentSum = 0
+    let currentDrawSum = 0
     records.forEach((item, index, array) => {
       if (index === array.length - 1) {
-        item.percentage = 100 - currentSum
-        item.drawPercentage = getDrawPercentage(item.percentage)
+        item.percentage = (100 - currentSum).toFixed(1)
+        item.drawPercentage = getDrawPercentage(parseInt(item.percentage))
       } else {
-        item.percentage = Math.round((item.amount / total) * 100)
-        item.drawPercentage = getDrawPercentage(item.percentage)
-        currentSum += item.percentage
+        item.percentage = ((item.amount / total) * 100).toFixed(1)
+        currentSum += parseFloat(item.percentage)
+        item.drawPercentage = getDrawPercentage(parseInt(item.percentage))
+        currentDrawSum += item.drawPercentage
       }
     })
     res.render('statistic', { records, total, month })
