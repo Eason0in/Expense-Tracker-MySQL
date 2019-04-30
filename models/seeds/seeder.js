@@ -1,8 +1,11 @@
 const mongoose = require('mongoose')
 const Record = require('../record')
-const User = require('../User')
+const User = require('../user')
 const bcrypt = require('bcryptjs')
-mongoose.connect('mongodb://127.0.0.1/expensetracker', { useNewUrlParser: true, useFindAndModify: false })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/expensetracker', {
+  useNewUrlParser: true,
+  useCreateIndex: true
+})
 const db = mongoose.connection
 
 db.on('error', () => {
