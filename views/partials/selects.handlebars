@@ -1,0 +1,25 @@
+<form action="/filter" method="POST" class="form-row">
+  <div class="form-group col-6">
+    <select class="form-control" name="month" onchange="this.form.submit()">
+      <option value="">請選擇</option>
+      {{#for 1 13 1 month}}
+      <option value="{{this}}">{{this}}</option>
+      {{/for}}
+    </select>
+  </div>
+
+  <div class="form-group col-6">
+    <select class="form-control" name="category" onchange="this.form.submit()">
+      <option value="">請選擇</option>
+      {{#select category}}
+      <option value="家居物業">家居物業</option>
+      <option value="交通出行">交通出行</option>
+      <option value="休閒娛樂">休閒娛樂</option>
+      <option value="餐飲食品">餐飲食品</option>
+      <option value="其他">其他</option>
+      {{/select}}
+
+    </select>
+  </div>
+
+</form>

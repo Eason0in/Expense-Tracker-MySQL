@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')
 const Handlebars = require('handlebars')
-const categoryInfo = require('../public/javascripts/categoryInfo')
 const getTotalAmount = require('../public/javascripts/getTotalAmount')
 const { authenticated } = require('../config/auth')
 
@@ -12,7 +11,7 @@ router.get('/', authenticated, (req, res) => {
     .exec((err, records) => {
       if (err) console.err(err)
       const total = getTotalAmount(records).toLocaleString()
-      res.render('index', { records, total, categoryInfo })
+      res.render('index', { records, total })
     })
 })
 
@@ -29,6 +28,23 @@ Handlebars.registerHelper('letterText', function(letter, options) {
     case '其他':
       return 'fa-pen'
   }
+})
+
+Handlebars.registerHelper('for', function(from, to, incr, month, block) {
+  var accum = ''
+  var option = ''
+  for (var i = from; i < to; i += incr) {
+    option = block.fn(i)
+    if (i === parseInt(month)) {
+      option = option.replace('<option ', '<option selected ')
+    }
+    accum += option
+  }
+  return accum
+})
+
+Handlebars.registerHelper('select', function(selected, options) {
+  return options.fn(this).replace(new RegExp(' value="' + selected + '"'), '$& selected="selected"')
 })
 
 module.exports = router
