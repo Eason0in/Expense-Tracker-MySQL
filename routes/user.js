@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
-const Record = require('../models/record')
-const User = require('../models/user')
+const db = require('../models')
+const User = db.User
 const bcrypt = require('bcryptjs')
 
 router.get('/login', (req, res) => {
@@ -45,13 +45,20 @@ router.post('/register', (req, res) => {
   if (errors.length > 0) {
     res.render('register', { errors, name, email, password, password2 })
   } else {
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(password, salt, (err, hash) => {
-        const newUser = new User({ email, name, password: hash })
-        newUser.save().then(() => {
-          res.redirect('/users/login')
+    User.findOne({ where: { email } }).then(user => {
+      if (user) {
+        console.log('使用者已存在')
+        res.render('register', { errors, name, email, password, password2 })
+      } else {
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(password, salt, (err, hash) => {
+            const newUser = new User({ email, name, password: hash })
+            newUser.save().then(() => {
+              res.redirect('/users/login')
+            })
+          })
         })
-      })
+      }
     })
   }
 })

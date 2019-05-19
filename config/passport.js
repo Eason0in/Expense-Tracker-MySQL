@@ -1,6 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
-const User = require('../models/user')
+const db = require('../models')
+const User = db.User
 const bcrypt = require('bcryptjs')
 
 module.exports = passport => {
@@ -10,7 +11,7 @@ module.exports = passport => {
         usernameField: 'email'
       },
       (email, password, done) => {
-        User.findOne({ email: email }).then(user => {
+        User.findOne({ where: { email } }).then(user => {
           if (!user) {
             return done(null, false, { message: '這個email沒有註冊' })
           }
@@ -37,7 +38,7 @@ module.exports = passport => {
         profileFields: ['email', 'displayName']
       },
       (accessToken, refreshToken, profile, done) => {
-        User.findOne({ email: profile._json.email }, (err, user) => {
+        User.findOne({ where: { email: profile._json.email } }, (err, user) => {
           if (!user) {
             const randomPassword = Math.random()
               .toString(36)
@@ -68,8 +69,8 @@ module.exports = passport => {
   })
 
   passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-      done(err, user)
+    User.findByPk(id).then(user => {
+      done(null, user)
     })
   })
 }

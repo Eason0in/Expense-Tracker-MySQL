@@ -1,18 +1,16 @@
 const express = require('express')
 const router = express.Router()
-const Record = require('../models/record')
+const db = require('../models')
+const Record = db.Record
 const Handlebars = require('handlebars')
 const getTotalAmount = require('../public/javascripts/getTotalAmount')
 const { authenticated } = require('../config/auth')
 
 router.get('/', authenticated, (req, res) => {
-  Record.find({ userId: req.user._id })
-    .sort('-date')
-    .exec((err, records) => {
-      if (err) console.err(err)
-      const total = getTotalAmount(records).toLocaleString()
-      res.render('index', { records, total })
-    })
+  Record.findAll({ where: { userId: req.user.id }, order: [['date', 'DESC']] }).then(records => {
+    const total = getTotalAmount(records).toLocaleString()
+    res.render('index', { records, total })
+  })
 })
 
 Handlebars.registerHelper('letterText', function(letter, options) {

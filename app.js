@@ -1,10 +1,9 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const app = express()
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const port = 3000
+const port = 8000
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
@@ -30,16 +29,11 @@ app.use((req, res, next) => {
   res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
-
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/expensetracker', {
-  useNewUrlParser: true,
-  useCreateIndex: true
-})
-
-const db = mongoose.connection
+const db = require('./models')
 
 app.use(require('./routes'))
 
-app.listen(process.env.PORT || port, () => {
+app.listen(port, () => {
+  db.sequelize.sync()
   console.log(`App is running in http://localhost:${port}`)
 })
