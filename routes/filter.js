@@ -1,21 +1,23 @@
 const express = require('express')
 const router = express.Router()
-const Record = require('../models/record')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
+const db = require('../models')
+const Record = db.Record
 const getTotalAmount = require('../public/javascripts/getTotalAmount')
 
 router.post('/', (req, res) => {
-  const category = req.body.category ? req.body.category : { $exists: true }
+  const category = req.body.category ? req.body.category : { [Op.like]: '%' }
   const month = req.body.month ? req.body.month : ''
 
-  Record.find({ userId: req.user._id, category }).exec((err, records) => {
-    if (err) console.err(err)
-
+  Record.findAll({
+    where: { userId: req.user.id, category }
+  }).then(records => {
     if (month) {
       records = records.filter(record => {
         return record.date.split('/')[1] === month.padStart(2, '0')
       })
     }
-    console.log(records)
     const total = getTotalAmount(records).toLocaleString()
     res.render('index', { records, total, category, month })
   })
