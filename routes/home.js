@@ -7,12 +7,15 @@ const getTotalAmount = require('../public/javascripts/getTotalAmount')
 const { authenticated } = require('../config/auth')
 
 router.get('/', authenticated, (req, res) => {
-  Record.findAll({ where: { userId: req.user.id }, order: [['date', 'DESC']] }).then(records => {
-    const total = getTotalAmount(records).toLocaleString()
-    res.render('index', { records, total })
-  })
+  Record.findAll({ where: { userId: req.user.id }, order: [['date', 'DESC']] })
+    .then(records => {
+      const total = getTotalAmount(records).toLocaleString()
+      res.render('index', { records, total })
+    })
+    .catch(err => console.log(err))
 })
 
+//依照類別顯示不同icon
 Handlebars.registerHelper('letterText', function(letter, options) {
   switch (letter) {
     case '家居物業':
@@ -28,6 +31,7 @@ Handlebars.registerHelper('letterText', function(letter, options) {
   }
 })
 
+//產生1~12月下拉資訊及處理月份下拉後選定該月份
 Handlebars.registerHelper('for', function(from, to, incr, month, block) {
   var accum = ''
   var option = ''
@@ -41,6 +45,7 @@ Handlebars.registerHelper('for', function(from, to, incr, month, block) {
   return accum
 })
 
+//當類別下拉選定該類別
 Handlebars.registerHelper('select', function(selected, options) {
   return options.fn(this).replace(new RegExp(' value="' + selected + '"'), '$& selected="selected"')
 })

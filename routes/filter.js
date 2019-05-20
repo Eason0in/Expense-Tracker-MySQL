@@ -6,21 +6,24 @@ const db = require('../models')
 const Record = db.Record
 const getTotalAmount = require('../public/javascripts/getTotalAmount')
 
+//當月份或類別下拉時篩選資料
 router.post('/', (req, res) => {
   const category = req.body.category ? req.body.category : { [Op.like]: '%' }
   const month = req.body.month ? req.body.month : ''
 
   Record.findAll({
     where: { userId: req.user.id, category }
-  }).then(records => {
-    if (month) {
-      records = records.filter(record => {
-        return record.date.split('/')[1] === month.padStart(2, '0')
-      })
-    }
-    const total = getTotalAmount(records).toLocaleString()
-    res.render('index', { records, total, category, month })
   })
+    .then(records => {
+      if (month) {
+        records = records.filter(record => {
+          return record.date.split('/')[1] === month.padStart(2, '0')
+        })
+      }
+      const total = getTotalAmount(records).toLocaleString()
+      res.render('index', { records, total, category, month })
+    })
+    .catch(err => console.log(err))
 })
 
 module.exports = router

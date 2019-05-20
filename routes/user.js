@@ -5,10 +5,12 @@ const db = require('../models')
 const User = db.User
 const bcrypt = require('bcryptjs')
 
+//取得登入畫面
 router.get('/login', (req, res) => {
   res.render('login')
 })
 
+//驗證登入
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
@@ -27,10 +29,12 @@ router.post('/login', (req, res, next) => {
   })(req, res, next)
 })
 
+//取得註冊畫面
 router.get('/register', (req, res) => {
   res.render('register')
 })
 
+//註冊新使用者
 router.post('/register', (req, res) => {
   const { name, email, password, password2 } = req.body
   const errors = []
@@ -45,21 +49,26 @@ router.post('/register', (req, res) => {
   if (errors.length > 0) {
     res.render('register', { errors, name, email, password, password2 })
   } else {
-    User.findOne({ where: { email } }).then(user => {
-      if (user) {
-        console.log('使用者已存在')
-        res.render('register', { errors, name, email, password, password2 })
-      } else {
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(password, salt, (err, hash) => {
-            const newUser = new User({ email, name, password: hash })
-            newUser.save().then(() => {
-              res.redirect('/users/login')
+    User.findOne({ where: { email } })
+      .then(user => {
+        if (user) {
+          console.log('使用者已存在')
+          res.render('register', { errors, name, email, password, password2 })
+        } else {
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(password, salt, (err, hash) => {
+              const newUser = new User({ email, name, password: hash })
+              newUser
+                .save()
+                .then(() => {
+                  res.redirect('/users/login')
+                })
+                .catch(err => console.log(err))
             })
           })
-        })
-      }
-    })
+        }
+      })
+      .catch(err => console.log(err))
   }
 })
 
